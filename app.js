@@ -12,7 +12,7 @@ const app = express();
 
 // eslint-disable-next-line prefer-arrow-callback
 app.use(function (req, res, next) {
-  const origins = ['http://192.168.88.215:3000', 'http://localhost:3000'];
+  const origins = ['http://192.168.88.215:3001', 'http://localhost:3001'];
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < origins.length; i++) {
@@ -45,7 +45,7 @@ app.use(cookieParser());
 // Body parser, reading data from body into req.body
 app.use(
   express.json({
-    limit: '10kb',
+    limit: '100kb',
     type: ['application/json', 'text/plain'],
   })
 );

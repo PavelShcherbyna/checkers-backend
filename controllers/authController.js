@@ -35,7 +35,6 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log('Тело запроса:', req.body);
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -72,10 +71,10 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
   }
 
-  if (!token) {
+  if (!token || token === 'null') {
     return next(
       new AppError(
-        'Вы не авторизованы! Авторизуйтесь что бы получить доступ.',
+        'Вы не авторизованы! Авторизуйтесь, что бы получить доступ.',
         401
       )
     );
@@ -84,6 +83,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
     return next(
       new AppError(
@@ -92,6 +92,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       )
     );
   }
+
   req.user = currentUser;
   next();
 });

@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
     minlength: [2, 'Имя должно содержать больше одного символа'],
     validate: {
       validator: function (el) {
-        //return el.includes('abcdefghijklmnopqrstuvwxyz'.split(''));
         const elArr = el.toLowerCase().split('');
         const alfabet =
           'abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя';
